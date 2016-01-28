@@ -15,7 +15,11 @@ var TodoBox = React.createClass({
   render: function () {
     return (
       <div className="todo--box">
-        <TodoList todos={this.state.todos} handleItemCheck={this.toggleCompletionStatus} />
+        <TodoList 
+          todos={this.state.todos} 
+          handleItemCheck={this.toggleCompletionStatus} 
+          handleItemDelete={this.deleteItem}
+        />
         <TodoForm handleTodoSubmit={this.addNewTodo}/>
         <TodoCount todos={this.state.todos} />
       </div>
@@ -39,6 +43,12 @@ var TodoBox = React.createClass({
     var newTodos = this.state.todos;
     newTodos[index].completed = !newTodos[index].completed;
     this.setState({todos:newTodos});
+  },
+
+  deleteItem: function (index) {
+    var newTodos = this.state.todos.slice();
+    newTodos.splice(index, 1);
+    this.setState({todos:newTodos});
   }
 
 });
@@ -47,7 +57,13 @@ var TodoList = React.createClass({
   render: function () {
     var todoNodes = this.props.todos.map(function (todo, index) {
       return (
-        <TodoItem todo={todo} index={index} handleItemCheck={this.props.handleItemCheck} key={todo.due}/>
+        <TodoItem 
+          todo={todo} 
+          index={index} 
+          handleItemDelete={this.props.handleItemDelete}
+          handleItemCheck={this.props.handleItemCheck} 
+          key={todo.due}
+        />
       );
     }.bind(this));
 
@@ -65,11 +81,19 @@ var TodoItem = React.createClass({
     this.props.handleItemCheck(this.props.index);
   },
 
+  handleDelete: function (e) {
+    e.preventDefault();
+    this.props.handleItemDelete(this.props.index);
+  },
+
   render: function () {
     return (
         <li className="todo--item" key={this.props.todo.due}>
           <div className="todo--completed">
             <input type="checkbox" checked={this.props.todo.completed} onChange={this.handleCheckBoxChange} />  
+          </div>
+          <div className="todo--delete">
+            <input type="submit" value="delete" onClick={this.handleDelete} />  
           </div>
           <div className="todo--details">
             <div className="todo--task">{this.props.todo.task}</div>
@@ -115,7 +139,7 @@ var TodoCount = React.createClass({
       </div>
     );
   }
-})
+});
 
 ReactDOM.render(
   <TodoBox />,
