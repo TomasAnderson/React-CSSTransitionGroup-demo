@@ -1,4 +1,4 @@
-/*.todo--list > li{
+.todo--list > li{
   border: 1px;
   margin: 2px;
   background-color: white;
@@ -24,7 +24,9 @@
 .todonode-leave.todenode-leave-active {
 	opacity: 0.01;
 	transition: opacity 300ms ease-in;
-}*/
+}
+
+
 .example-enter {
   opacity: 0.01;
   transition: opacity 1s ease-in;
