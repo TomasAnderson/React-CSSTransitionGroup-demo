@@ -1,4 +1,4 @@
-.todo--list > li{
+/*.todo--list > li{
   border: 1px;
   margin: 2px;
   background-color: white;
@@ -6,4 +6,40 @@
 
 .todo--list > li:hover {
   background-color: grey;
+}
+
+.todonode-enter {
+	opacity: 0.01;
+}
+
+.todonode-enter.todonode-enter-active {
+	opacity: 1;
+	transition: opacity 500ms ease-in;
+}
+
+.todonode-leave {
+	opacity: 1;
+}
+
+.todonode-leave.todenode-leave-active {
+	opacity: 0.01;
+	transition: opacity 300ms ease-in;
+}*/
+.example-enter {
+  opacity: 0.01;
+  transition: opacity 1s ease-in;
+  -webkit-transition: opacity 1s ease-in;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
 }

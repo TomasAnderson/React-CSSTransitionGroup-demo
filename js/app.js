@@ -57,6 +57,7 @@ var TodoBox = React.createClass({
 });
 
 var TodoList = React.createClass({
+
   render: function () {
     var todoNodes = this.props.todos.map(function (todo, index) {
       return (
@@ -71,14 +72,23 @@ var TodoList = React.createClass({
     }.bind(this));
 
     return (
-      <ul className="todo--list">
-        {todoNodes}
-      </ul>
+      <div className="TodoList">
+        <ul className="todo--list">
+          {todoNodes}
+        </ul>
+      </div> 
     );
   }
 });
 
 var TodoItem = React.createClass({
+
+  getInitialState: function() {
+    return {
+      isExpanded: true, 
+      divs: []
+    };
+  },
 
   handleCheckBoxChange: function () {
     this.props.handleItemCheck(this.props.index);
@@ -89,9 +99,10 @@ var TodoItem = React.createClass({
     this.props.handleItemDelete(this.props.index);
   },
 
-  render: function () {
-    return (
-        <li className="todo--item" key={this.props.todo.due}>
+  toggleExpanded: function () {
+    var newDivs ;
+    if(this.state.isExpanded) {
+      newDivs = <li className="todo--item" key={this.props.todo.due}>
           <div className="todo--completed">
             <input type="checkbox" checked={this.props.todo.completed} onChange={this.handleCheckBoxChange} />  
           </div>
@@ -102,8 +113,28 @@ var TodoItem = React.createClass({
             <div className="todo--task">{this.props.todo.task}</div>
             <div className="todo--due">{this.props.todo.due.toString()}</div>
           </div>  
-        </li>
-    );
+        </li>;
+    } else {
+      newDivs = <li className="todo--item" key={this.props.todo.due}><div className="todo--details" >
+                <div className="todo--task">{this.props.todo.task}</div>
+             </div></li>;
+    }
+    this.setState({
+      isExpanded: !this.state.isExpanded,
+      divs: newDivs
+    });
+  },
+
+  render: function () {
+    return (
+        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} >
+          <button key={'abc'} type="button" onClick={this.toggleExpanded}>
+          {this.state.expanded ? 'hide' : 'show'}
+          </button>
+          {this.state.divs}
+        </ReactCSSTransitionGroup>
+    )
+
   }
 
 })
@@ -112,7 +143,7 @@ var TodoForm = React.createClass({
 
   _handleFormSubmit: function (e) {
     e.preventDefault();
-    var inputEl = ReactDOM.findDOMNode(this.refs.inputText);
+    var inputEl = React.findDOMNode(this.refs.inputText);
     this.props.handleTodoSubmit(inputEl.value.trim())
     inputEl.value = '';
   },
@@ -121,7 +152,7 @@ var TodoForm = React.createClass({
     return (
       <form className="todo--form" onSubmit={this._handleFormSubmit} >
         <label for="todo--input">Add a new task</label>
-        <input type="text" name="todo--input" class="todo--input" placeholder="I want to..."  ref="inputText" />
+        <input type="text" name="todo--input" className="todo--input" placeholder="I want to..."  ref="inputText" />
         <input type="submit" value="Add" />
       </form>
     );
