@@ -45,3 +45,11 @@
 .example-leave.example-leave-active {
   opacity: 0.01;
 }
+
+li {
+	display: block;
+}
+
+button {
+	display: block;
+}
