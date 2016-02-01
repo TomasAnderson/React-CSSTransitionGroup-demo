@@ -6,13 +6,6 @@ var TodoItem = React.createClass({
   getInitialState: function() {
     return {
       isExpanded: false, 
-      divs:   
-          <li className="todo--item" key="todo--item">
-            <button key={'abc'} type="button" onClick={this.toggleExpanded}>
-              show
-            </button>
-            <p>{this.props.todo.task}</p>
-          </li>
     };
   },
 
@@ -26,40 +19,40 @@ var TodoItem = React.createClass({
   },
 
   toggleExpanded: function () {
-    var newDivs ;
-    if(!this.state.isExpanded) {
-      newDivs = 
-            <li className="todo--item" key="todo--item">
-            <button key={'abc'} type="button" onClick={this.toggleExpanded}>
-              {this.state.expanded ? 'hide' : 'show'}
-            </button>
-            <input type="checkbox" checked={this.props.todo.completed} onChange={this.handleCheckBoxChange} />  
-            <input type="submit" value="delete" onClick={this.handleDelete} />  
-            <p>{this.props.todo.task}</p>
-            <p>{this.props.todo.due.toString()}</p>
-          </li>;
-
-    } else {
-      newDivs = 
-          <li className="todo--item" key="todo--item">
-            <button key={'abc'} type="button" onClick={this.toggleExpanded}>
-              {this.state.isExpanded ? 'hide' : 'show'}
-            </button>
-            <p>{this.props.todo.task}</p>
-          </li>;
-
-    }
     this.setState({
-      isExpanded: !this.state.isExpanded,
-      divs: newDivs
+      isExpanded: !this.state.isExpanded
     });
   },
 
   render: function () {
+
+    var checkboxDiv =
+        <div key = "todo--item">            
+          <input type="checkbox" checked={this.props.todo.completed} onChange={this.handleCheckBoxChange} />  
+        </div> 
+    var checkboxDiv = this.state.isExpanded? checkboxDiv: null;
+
+    var deleteButtonDiv = 
+        <div key = "delete--button">
+          <input type="submit" value="delete" onClick={this.handleDelete} />  
+          <p>{this.props.todo.due.toString()}</p>
+        </div>
+    var deleteButtonDiv = this.state.isExpanded? deleteButtonDiv: null; 
+
+
     return (
-        // <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-          this.state.divs
-        // </ReactCSSTransitionGroup>
+          <li className="todo--item" key="todo--item">
+            <button key={'abc'} type="button" onClick={this.toggleExpanded}>
+              {this.state.isExpanded ? 'hide' : 'show'}
+            </button>
+            <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+              {checkboxDiv}
+            </ReactCSSTransitionGroup>
+            <p>{this.props.todo.task}</p>
+            <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+              {deleteButtonDiv}
+            </ReactCSSTransitionGroup>
+          </li>
     );
 
   }
