@@ -1,5 +1,7 @@
 var React = require('react');
 var TodoItem = require('./todoitem.react');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 
 var TodoList = React.createClass({
 
@@ -19,9 +21,12 @@ var TodoList = React.createClass({
     return (
       <div className="TodoList">
         <ul className="todo--list">
-          {todoNodes}
+          <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+            {todoNodes}
+          </ReactCSSTransitionGroup>
         </ul>
       </div> 
+
     );
   }
 });

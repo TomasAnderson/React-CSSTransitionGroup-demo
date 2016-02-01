@@ -6,12 +6,13 @@ var TodoItem = React.createClass({
   getInitialState: function() {
     return {
       isExpanded: false, 
-      divs:   <li className="todo--item" key={this.props.todo.due}><div className="todo--details" >
-                <button key={'abc'} type="button" onClick={this.toggleExpanded}>
-          show
-          </button>
-                <div className="todo--task">{this.props.todo.task}</div>
-             </div></li>
+      divs:   
+          <li className="todo--item" key="todo--item">
+            <button key={'abc'} type="button" onClick={this.toggleExpanded}>
+              show
+            </button>
+            <p>{this.props.todo.task}</p>
+          </li>
     };
   },
 
@@ -28,31 +29,23 @@ var TodoItem = React.createClass({
     var newDivs ;
     if(!this.state.isExpanded) {
       newDivs = 
-            <li className="todo--item" key={this.props.todo.due}>
+            <li className="todo--item" key="todo--item">
             <button key={'abc'} type="button" onClick={this.toggleExpanded}>
               {this.state.expanded ? 'hide' : 'show'}
             </button>
-            <div className="todo--completed">
-              <input type="checkbox" checked={this.props.todo.completed} onChange={this.handleCheckBoxChange} />  
-            </div>
-            <div className="todo--delete">
-              <input type="submit" value="delete" onClick={this.handleDelete} />  
-            </div>
-            <div className="todo--details">
-              <div className="todo--task">{this.props.todo.task}</div>
-              <div className="todo--due">{this.props.todo.due.toString()}</div>
-            </div>  
+            <input type="checkbox" checked={this.props.todo.completed} onChange={this.handleCheckBoxChange} />  
+            <input type="submit" value="delete" onClick={this.handleDelete} />  
+            <p>{this.props.todo.task}</p>
+            <p>{this.props.todo.due.toString()}</p>
           </li>;
 
     } else {
       newDivs = 
-          <li className="todo--item" key={this.props.todo.due}>
+          <li className="todo--item" key="todo--item">
             <button key={'abc'} type="button" onClick={this.toggleExpanded}>
               {this.state.isExpanded ? 'hide' : 'show'}
             </button>
-            <div className="todo--details" >
-              <div className="todo--task">{this.props.todo.task}</div>
-            </div>
+            <p>{this.props.todo.task}</p>
           </li>;
 
     }
@@ -64,9 +57,9 @@ var TodoItem = React.createClass({
 
   render: function () {
     return (
-        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-          {this.state.divs}
-        </ReactCSSTransitionGroup>
+        // <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+          this.state.divs
+        // </ReactCSSTransitionGroup>
     );
 
   }
