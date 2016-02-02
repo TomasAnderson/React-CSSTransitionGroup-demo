@@ -1,5 +1,7 @@
 var React = require('react');
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+// var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var Collapse = require('./collapse.react')
+
 
 var TodoItem = React.createClass({
 
@@ -45,13 +47,13 @@ var TodoItem = React.createClass({
             <button key={'abc'} type="button" onClick={this.toggleExpanded}>
               {this.state.isExpanded ? 'hide' : 'show'}
             </button>
-            <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+            <Collapse className="mark--complete" key="mark--complete">
               {checkboxDiv}
-            </ReactCSSTransitionGroup>
+            </Collapse>
             <p>{this.props.todo.task}</p>
-            <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+            <Collapse className="delete--button" key="delete--button">
               {deleteButtonDiv}
-            </ReactCSSTransitionGroup>
+            </Collapse>
           </li>
     );
 

@@ -47,7 +47,10 @@
 
 }
 
-
+.todo--item {
+  border: 1px;
+  background-color: grey;
+}
 li {
 	display: block;
 }
